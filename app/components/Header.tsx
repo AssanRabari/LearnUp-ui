@@ -1,6 +1,7 @@
 "use-client";
+import Link from "next/link";
 import React, { FC, useState } from "react";
-
+import NavItems from "../utils/NavItems"
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -10,7 +11,7 @@ type Props = {
 const Header: FC<Props> = (props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [active, setActive] = useState(false);
-
+  const [activeItems, setActiveItems] = useState(0);
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -30,8 +31,21 @@ const Header: FC<Props> = (props) => {
             : "w-full border-b dark:border-[#ffffff1c] h-[80px] z-[80] dark:shadow"
         }`}
       >
-        <div className="w-[95%]"></div>
-        {/* 27 */}
+        <div className="w-[95%] 800px:w-[92%] m-auto py-2 h-full">
+          <div className="w-full h-[80px] flex items-center justify-between p-3">
+            <div>
+              <Link
+                href={""}
+                className="text-[25px]  font-Poppins font-[500] text-black dark:text:white"
+              >
+                LearnUp
+              </Link>
+            </div>{" "}
+            <div className="flex-items-center">
+              <NavItems activeItem={activeItems} isMobile={false} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
