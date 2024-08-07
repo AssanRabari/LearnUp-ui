@@ -43,7 +43,7 @@ const Header: FC<Props> = (props) => {
               </Link>
             </div>{" "}
             <div className="flex-items-center">
-              <NavItems activeItem={activeItems} isMobile={false} />{" "}
+              <NavItems activeItem={activeItems} isMobile={false} />
               <ThemeSwitcher />
             </div>
           </div>
