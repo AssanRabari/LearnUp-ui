@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import React, { FC, useState } from "react";
 import Heading from "./utils/Heading";
 import Header from "./components/Header";
-
+import Hero from "./components/Hero";
 interface Props {}
 
 const Page: FC<Props> = (props) => {
@@ -17,6 +17,7 @@ const Page: FC<Props> = (props) => {
         keywords="Programming,Coding,Tech, React,Next,MERN, Node,Express,Mongodb"
       />
       <Header open={open} setOpen={setOpen} activeItem={activeItem} />
+      <Hero />
     </div>
   );
 };
