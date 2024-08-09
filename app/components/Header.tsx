@@ -3,16 +3,18 @@ import Link from "next/link";
 import React, { FC, useState } from "react";
 import NavItems from "../utils/NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
+import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   activeItem: number;
 };
 
-const Header: FC<Props> = (props) => {
+const Header: FC<Props> = ({ activeItem, setOpen }) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [active, setActive] = useState(false);
-  const [activeItems, setActiveItems] = useState(0);
+
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -22,6 +24,12 @@ const Header: FC<Props> = (props) => {
       }
     });
   }
+
+  const handleClose = (e: any) => {
+    if (e.target.id === "screen") {
+      setOpenSideBar(false);
+    }
+  };
 
   return (
     <div className="w-full relative">
@@ -37,17 +45,52 @@ const Header: FC<Props> = (props) => {
             <div>
               <Link
                 href={""}
-                className="text-[25px]  font-Poppins font-[500] text-black dark:text:white"
+                className="text-[25px]  font-Poppins font-[500] text-black dark:text-white"
               >
                 LearnUp
               </Link>
             </div>{" "}
-            <div className="flex-items-center">
-              <NavItems activeItem={activeItems} isMobile={false} />
+            <div className="flex items-center">
+              <NavItems activeItem={activeItem} isMobile={false} />
               <ThemeSwitcher />
+              {/* for only mobile */}
+              <div className="800px:hidden">
+                <HiOutlineMenuAlt3
+                  size={25}
+                  className="cursor-pointer dark:text-white text-black"
+                  onClick={() => setOpenSideBar(true)}
+                />
+              </div>{" "}
+              <HiOutlineUserCircle
+                size={25}
+                className=" hidden 800px:block cursor-pointer dark:text-white text-black"
+                onClick={() => setOpen(true)}
+              />
             </div>
           </div>
         </div>
+        {/* mobile sidebar */}{" "}
+        {openSideBar && (
+          <div
+            className="fixed w-full h-screen top-0 left-0 z-[99999] dark:bg-[unset] bg-[#00000024]"
+            onClick={handleClose}
+            id="screen"
+          >
+            <div className=" w-[70%] fixed h-screen top-0 right-0 z-[999999999]  bg-white dark:bg-slate-900 dark:bg-opacity-900">
+              <NavItems activeItem={activeItem} isMobile={true} />
+              <HiOutlineUserCircle
+                size={25}
+                className="cursor-pointer ml-5 my-2 dark:text-white text-black"
+                onClick={() => setOpen(true)}
+              />
+              <br />
+              <br />
+              <p className="text-[16px] px-2 pl-5 dark:text-white text-black">
+                Copyright 2023 LearnUp
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

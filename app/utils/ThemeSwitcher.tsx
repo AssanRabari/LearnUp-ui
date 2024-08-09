@@ -23,6 +23,7 @@ const ThemeSwitcher = () => {
         <BiSun
           className="cursor-pointer"
           size={24}
+          fill="white"
           onClick={() => setTheme("light")}
         />
       )}
