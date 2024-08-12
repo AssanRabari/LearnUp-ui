@@ -17,6 +17,19 @@ export const authApi = apiSlice.injectEndpoints({
         body: data,
         credentials: "include" as const,
       }),
+      async onQueryStarted(args, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(
+            userRegistration({
+              token: result.data.activationToken,
+            })
+          );
+        } catch (error: any) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });
+export const { useRegisterMutation } = authApi;
