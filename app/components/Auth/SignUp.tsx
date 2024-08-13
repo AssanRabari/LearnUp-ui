@@ -10,6 +10,7 @@ import {
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { styles } from "../../styles/style";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
 
 type Props = { setRoute: (route: string) => void };
 
@@ -23,13 +24,13 @@ const schema = Yup.object().shape({
 
 const SignUp: FC<Props> = ({ setRoute }) => {
   const [show, setShow] = useState(false);
-
+  const [register, { isError, data, isSuccess }] = useRegisterMutation()
   const formik = useFormik({
     initialValues: { name: " ", email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ name, email, password }) => {
       setRoute("Verification");
-      console.log(name, email, password);
+      const data = { name, email, password };
     },
   });
 
