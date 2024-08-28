@@ -1,5 +1,7 @@
+"user-client";
+
 import React, { FC } from "react";
-import { Modal, Box } from '@mui/material';
+import { Modal, Box } from '../lib/mui';
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
