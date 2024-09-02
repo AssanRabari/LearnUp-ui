@@ -1,4 +1,4 @@
-"user-client";
+`"use-client";`
 
 import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
@@ -83,7 +83,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
         </label>
         <input
           type="email"
-          name=""
+          name="email"
           value={values.email}
           onChange={handleChange}
           id="email"

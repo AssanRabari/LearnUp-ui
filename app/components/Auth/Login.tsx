@@ -1,4 +1,4 @@
-"user-client";
+`"use-client";`
 
 import React, { FC, useState } from "react";
 import { useFormik } from "formik";

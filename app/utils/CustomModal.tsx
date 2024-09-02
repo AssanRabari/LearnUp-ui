@@ -1,4 +1,4 @@
-"user-client";
+"use-client";
 
 import React, { FC } from "react";
 import { Modal, Box } from '../lib/mui';

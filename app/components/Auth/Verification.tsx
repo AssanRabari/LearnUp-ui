@@ -1,4 +1,4 @@
-"user-client";
+"use-client";
 
 import { styles } from "@/app/styles/style";
 import React, { FC, useRef, useState } from "react";
