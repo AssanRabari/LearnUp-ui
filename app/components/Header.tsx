@@ -1,7 +1,7 @@
-`"use-client";`;
+"use client";
 
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import NavItems from "../utils/NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
@@ -11,7 +11,11 @@ import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import avatar from "../../public/avatar.png"
+import avatar from "../../public/avatar.png";
+import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -24,7 +28,24 @@ const Header: FC<Props> = ({ open, activeItem, setOpen, route, setRoute }) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [active, setActive] = useState(false);
   const { user } = useSelector((state: any) => state.auth);
-  
+  const { data } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+  useEffect(() => {
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image,
+        });
+      }
+    }
+    if (isSuccess) {
+      toast.success("Login Successfull");
+    }
+  }, [data, user]);
+
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -73,7 +94,7 @@ const Header: FC<Props> = ({ open, activeItem, setOpen, route, setRoute }) => {
               </div>{" "}
               {user ? (
                 <Link href={"/profile"}>
-                  <Image 
+                  <Image
                     src={user.avatar ? user.avatar : avatar}
                     alt="avatar"
                     className="w-[25px] h-[25px] rounded-full cursor-pointer"

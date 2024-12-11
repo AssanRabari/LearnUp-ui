@@ -12,6 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 import { styles } from "../../styles/style";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 type Props = {
   setRoute: (route: string) => void;
@@ -27,27 +28,27 @@ const schema = Yup.object().shape({
 
 const Login: FC<Props> = ({ setRoute, setOpen }) => {
   const [show, setShow] = useState(false);
-  const [login, { isSuccess, error }] = useLoginMutation()
+  const [login, { isSuccess, error }] = useLoginMutation();
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
-      await login({ email, password })
+      await login({ email, password });
     },
   });
 
   useEffect(() => {
     if (isSuccess) {
-      setOpen(false)
+      setOpen(false);
       toast.success("Login Successfully!");
     }
     if (error) {
       if ("data" in error) {
         const errorData = error as any;
-        toast.error(errorData.data.message)
+        toast.error(errorData.data.message);
       }
     }
-  }, [isSuccess, error])
+  }, [isSuccess, error]);
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
 
@@ -65,7 +66,9 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
           onChange={handleChange}
           id="email"
           placeholder="examle@gmail.com"
-          className={`${errors.email && touched.email && "border-red-500"} ${styles.input}`}
+          className={`${errors.email && touched.email && "border-red-500"} ${
+            styles.input
+          }`}
         />
         {errors.email && touched.email && (
           <span className="text-red-500 pt-2 block">{errors.email}</span>
@@ -82,7 +85,9 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
             onChange={handleChange}
             id="password"
             placeholder="password!@%"
-            className={`${errors.password && touched.password && "border-red-500"} ${styles.input}`}
+            className={`${
+              errors.password && touched.password && "border-red-500"
+            } ${styles.input}`}
           />
           {!show ? (
             <AiOutlineEyeInvisible
@@ -110,8 +115,12 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
           Or Join with
         </h5>
         <div className="flex items-center justify-center my-3">
-          <FcGoogle className="cursor-pointer mr-2" size={30} />
-          <AiFillGithub className="cursor-pointer ml-2" size={30} />
+          <FcGoogle
+            className="cursor-pointer mr-2"
+            size={30}
+            onClick={() => signIn("google")}
+          />
+          <AiFillGithub className="cursor-pointer ml-2" size={30} onClick={() => signIn("github")}/>
         </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px] text:black dark:text-white">
           Not have any account?
