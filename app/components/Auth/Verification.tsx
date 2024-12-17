@@ -59,6 +59,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
       activation_token: token,
       activation_code: verificationNumber,
     });
+    setRoute("Login")
     console.log("VerificationHandler");
   };
 
