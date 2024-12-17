@@ -4,18 +4,20 @@ import React, { FC, useState } from "react";
 import Protected from "../hooks/useProtected";
 import Heading from "../utils/Heading";
 import Header from "../components/Header";
-
+import Profile from "../components/Profile"
+import { useSelector } from "react-redux";
 type Props = {};
 
 const page: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const [route, setRoute] = useState("Login");
+  const {user} = useSelector((state:any) => state.auth)
   return (
     <div>
       <Protected>
         <Heading
-          title="LearnUp"
+          title={`${user.name}`}
           description="LearnUp is a platform for students to learn new Skills"
           keywords="Programming,Coding,Tech, React,Next,MERN, Node,Express,Mongodb"
         />
@@ -26,6 +28,7 @@ const page: FC<Props> = (props) => {
           route={route}
           setRoute={setRoute}
         />
+        <Profile />
       </Protected>
     </div>
   );
