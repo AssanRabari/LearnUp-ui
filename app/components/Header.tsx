@@ -12,7 +12,7 @@ import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import avatar from "../../public/avatar.png";
-import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import { useLogOutQuery, useSocialAuthMutation } from "@/redux/features/auth/authApi";
 // import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
@@ -28,6 +28,11 @@ const Header: FC<Props> = ({ open, activeItem, setOpen, route, setRoute }) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [active, setActive] = useState(false);
   const { user } = useSelector((state: any) => state.auth);
+  const [logout, setLogout] = useState(false);
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
   // const { data } = useSession();
   // const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
@@ -41,9 +46,12 @@ const Header: FC<Props> = ({ open, activeItem, setOpen, route, setRoute }) => {
   //       });
   //     }
   //   }
-  //   if (isSuccess) {
+  //   if (data === null || isSuccess) {
   //     toast.success("Login Successfull");
   //   }
+      //  if(data === null ){
+      //   setLogout(true)
+      //  }
   // }, [data, user]);
 
   if (typeof window !== "undefined") {
