@@ -12,7 +12,10 @@ import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import avatar from "../../public/avatar.png";
-import { useLogOutQuery, useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import {
+  useLogOutQuery,
+  useSocialAuthMutation,
+} from "@/redux/features/auth/authApi";
 // import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
@@ -49,9 +52,9 @@ const Header: FC<Props> = ({ open, activeItem, setOpen, route, setRoute }) => {
   //   if (data === null || isSuccess) {
   //     toast.success("Login Successfull");
   //   }
-      //  if(data === null ){
-      //   setLogout(true)
-      //  }
+  //  if(data === null ){
+  //   setLogout(true)
+  //  }
   // }, [data, user]);
 
   if (typeof window !== "undefined") {
@@ -103,9 +106,12 @@ const Header: FC<Props> = ({ open, activeItem, setOpen, route, setRoute }) => {
               {user ? (
                 <Link href={"/profile"}>
                   <Image
-                    src={user.avatar ? user.avatar : avatar}
+                    src={user.avatar ? user.avatar.url : avatar}
                     alt="avatar"
+                    width={30}
+                    height={30}
                     className="w-[25px] h-[25px] rounded-full cursor-pointer"
+                    style={{border: activeItem === 5 ? "2px solid #37a39a" : "none"}}
                   />
                 </Link>
               ) : (

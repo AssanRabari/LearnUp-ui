@@ -28,8 +28,10 @@ const SideBarProfile: FC<Props> = ({
         onClick={() => setActive(1)}
       >
         <Image
-          src={user.avatar || avatar ? user.avatar || avatar : defaultAvatar}
+          src={user.avatar || avatar ? user.avatar.url || avatar : defaultAvatar}
           className="w-[20px] h-[20px] 800px:w-[30px] 800px:h-[30px] cursor-pointer rounded-full"
+          width={20}
+          height={20}
           alt=""
         />
         <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
