@@ -1,5 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { styles } from "../styles/style";
+import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -7,8 +9,32 @@ const ChangePassword: FC<Props> = (props) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
 
-  const handlePasswordChange = (e: any) => {};
+  const handlePasswordChange = async (e: any) => {
+    e.preventDefault()
+    if (newPassword !== confirmNewPassword) {
+      toast.error("New passoword should match");
+    } else {
+      await updatePassword({
+        oldPassword,
+        newPassword,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Password updated successfully");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      }
+    }
+  }, [isSuccess, error]);
+
   return (
     <div className="w-full pl-7 px-2 800px:px-5 800px:pl-0">
       <h1 className="block text-[25px] 800px:text-[30px] font-Poppins text-center font-[500] text-black dark:text-[#fff] pb-2">
